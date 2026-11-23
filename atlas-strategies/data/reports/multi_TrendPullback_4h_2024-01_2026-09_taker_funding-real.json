@@ -1,0 +1,167 @@
+{
+  "strategy": "TrendPullback",
+  "timeframe": "4h",
+  "start": "2024-01",
+  "end": "2026-09",
+  "execution": "taker",
+  "funding": "real",
+  "per_symbol": {
+    "BTCUSDT": {
+      "n_trades": 231,
+      "win_rate_pct": 34.2,
+      "profit_factor": 1.141,
+      "avg_win": 60.06,
+      "avg_loss": -27.36,
+      "avg_rr": 2.2,
+      "net_pnl": 585.98,
+      "first_month": "2024-01",
+      "pf_gross_no_funding": 1.161,
+      "funding_total": -78.64,
+      "return_pct": 5.85,
+      "final_equity": 10585.41,
+      "max_drawdown_pct": 5.23,
+      "bars": 6024,
+      "by_reason": {
+        "SIGNAL": 5,
+        "SL": 226
+      },
+      "long": 127,
+      "short": 104
+    },
+    "ETHUSDT": {
+      "n_trades": 206,
+      "win_rate_pct": 38.35,
+      "profit_factor": 1.404,
+      "avg_win": 62.64,
+      "avg_loss": -27.76,
+      "avg_rr": 2.26,
+      "net_pnl": 1423.61,
+      "first_month": "2024-01",
+      "pf_gross_no_funding": 1.42,
+      "funding_total": -51.8,
+      "return_pct": 14.24,
+      "final_equity": 11423.56,
+      "max_drawdown_pct": 4.04,
+      "bars": 6024,
+      "by_reason": {
+        "SIGNAL": 4,
+        "SL": 202
+      },
+      "long": 101,
+      "short": 105
+    },
+    "SOLUSDT": {
+      "n_trades": 229,
+      "win_rate_pct": 35.81,
+      "profit_factor": 1.041,
+      "avg_win": 45.41,
+      "avg_loss": -24.34,
+      "avg_rr": 1.87,
+      "net_pnl": 145.14,
+      "first_month": "2024-01",
+      "pf_gross_no_funding": 1.06,
+      "funding_total": -68.39,
+      "return_pct": 1.45,
+      "final_equity": 10145.09,
+      "max_drawdown_pct": 4.64,
+      "bars": 6024,
+      "by_reason": {
+        "SIGNAL": 8,
+        "SL": 221
+      },
+      "long": 107,
+      "short": 122
+    },
+    "BNBUSDT": {
+      "n_trades": 241,
+      "win_rate_pct": 37.76,
+      "profit_factor": 1.201,
+      "avg_win": 56.18,
+      "avg_loss": -28.38,
+      "avg_rr": 1.98,
+      "net_pnl": 855.47,
+      "first_month": "2024-01",
+      "pf_gross_no_funding": 1.203,
+      "funding_total": -11.92,
+      "return_pct": 8.55,
+      "final_equity": 10855.26,
+      "max_drawdown_pct": 5.13,
+      "bars": 6024,
+      "by_reason": {
+        "SIGNAL": 11,
+        "SL": 230
+      },
+      "long": 148,
+      "short": 93
+    },
+    "DOGEUSDT": {
+      "n_trades": 217,
+      "win_rate_pct": 37.33,
+      "profit_factor": 1.19,
+      "avg_win": 48.62,
+      "avg_loss": -24.33,
+      "avg_rr": 2.0,
+      "net_pnl": 628.67,
+      "first_month": "2024-01",
+      "pf_gross_no_funding": 1.2,
+      "funding_total": -32.53,
+      "return_pct": 6.28,
+      "final_equity": 10628.34,
+      "max_drawdown_pct": 3.44,
+      "bars": 6024,
+      "by_reason": {
+        "SIGNAL": 6,
+        "SL": 211
+      },
+      "long": 91,
+      "short": 126
+    },
+    "XRPUSDT": {
+      "n_trades": 212,
+      "win_rate_pct": 36.79,
+      "profit_factor": 1.181,
+      "avg_win": 50.97,
+      "avg_loss": -25.12,
+      "avg_rr": 2.03,
+      "net_pnl": 609.58,
+      "first_month": "2024-01",
+      "pf_gross_no_funding": 1.194,
+      "funding_total": -39.44,
+      "return_pct": 6.09,
+      "final_equity": 10609.24,
+      "max_drawdown_pct": 4.17,
+      "bars": 6024,
+      "by_reason": {
+        "SIGNAL": 13,
+        "SL": 199
+      },
+      "long": 89,
+      "short": 123
+    }
+  },
+  "total": {
+    "n_trades": 1336,
+    "win_rate_pct": 36.68,
+    "profit_factor": 1.191,
+    "avg_win": 53.97,
+    "avg_loss": -26.23,
+    "avg_rr": 2.06,
+    "net_pnl": 4248.45,
+    "pf_gross_no_funding": 1.205,
+    "funding_total": -282.72,
+    "bootstrap_pf": {
+      "n": 1000,
+      "ci95_low": 1.0,
+      "ci95_high": 1.401,
+      "p_pf_lt_1_pct": 2.5
+    },
+    "bootstrap_pf_months": {
+      "n": 1000,
+      "months": 32,
+      "positive_months": 19,
+      "ci95_low": 0.903,
+      "ci95_high": 1.561,
+      "p_pf_lt_1_pct": 9.8
+    }
+  }
+}
