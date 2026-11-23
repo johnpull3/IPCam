@@ -1,11 +1,20 @@
 from atlas_strategies.common.models import SymbolFilters, Trade, Side
-from atlas_strategies.common.executor import build_position, check_exit, exit_pnl
+from atlas_strategies.common.executor import (
+    EXECUTION_MODES, MAKER_FEE, TAKER_FEE, build_position, check_exit, exit_pnl, maker_fill_price
+)
 from atlas_strategies.backtest.data_generator import generate_synthetic_bars
 
 
 def run_backtest(strategy, bars, filters=None, initial_equity=10000.0,
-                 funding_rate_per_8h=0.0001):
+                 funding_rate_per_8h=0.0001, execution_mode="taker"):
+    """execution_mode: "taker" (MARKET al open siguiente, TAKER_FEE + SLIPPAGE)
+    o "maker" (LIMIT al close de la señal, llena si la vela siguiente lo toca, MAKER_FEE sin slippage)."""
+    if execution_mode not in EXECUTION_MODES:
+        raise ValueError(f"execution_mode inválido: {execution_mode!r}")
     filters = filters or SymbolFilters()
+    fee_rate = MAKER_FEE if execution_mode == "maker" else TAKER_FEE
+    signals = 0
+    missed_signals = 0
     equity = initial_equity
     position = None
     trades = []
@@ -20,10 +29,21 @@ def run_backtest(strategy, bars, filters=None, initial_equity=10000.0,
         if position is None:
             signal = strategy.on_bar(bar)
             if signal is not None:
-                position = build_position(
-                    signal, next_bar.open, equity, filters,
-                    entry_ts=next_bar.ts, entry_index=i + 1
-                )
+                signals += 1
+                if execution_mode == "maker":
+                    limit = maker_fill_price(signal, bar.close, next_bar)
+                    if limit is None:
+                        missed_signals += 1
+                    else:
+                        position = build_position(
+                            signal, limit, equity, filters,
+                            entry_ts=next_bar.ts, entry_index=i + 1, slippage=0.0
+                        )
+                else:
+                    position = build_position(
+                        signal, next_bar.open, equity, filters,
+                        entry_ts=next_bar.ts, entry_index=i + 1
+                    )
                 if position:
                     bars_held = 0
 
@@ -41,7 +61,7 @@ def run_backtest(strategy, bars, filters=None, initial_equity=10000.0,
             reason = check_exit(position, next_bar)
             if reason is not None:
                 exit_price = position.sl_price if reason == "SL" else position.tp_price
-                pnl = exit_pnl(position, exit_price)
+                pnl = exit_pnl(position, exit_price, fee_rate)
                 equity += pnl
                 trades.append(Trade(
                     side=position.side,
@@ -64,6 +84,9 @@ def run_backtest(strategy, bars, filters=None, initial_equity=10000.0,
         "initial_equity": initial_equity,
         "return_pct": (equity / initial_equity - 1) * 100,
         "n_trades": len(trades),
+        "execution_mode": execution_mode,
+        "signals": signals,
+        "missed_signals": missed_signals,
         "trades": trades,
         "equity_curve": equity_curve,
     }

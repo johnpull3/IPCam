@@ -87,7 +87,13 @@ def metrics(result):
     losses = [t for t in trades if t.pnl <= 0]
     gross_win = sum(t.pnl for t in wins)
     gross_loss = abs(sum(t.pnl for t in losses))
+    sig = result.get("signals", 0)
+    missed = result.get("missed_signals", 0)
     return {
+        "execution_mode": result.get("execution_mode"),
+        "signals": sig,
+        "missed_signals": missed,
+        "fill_rate_pct": round(100 * (sig - missed) / sig, 2) if sig else None,
         "n_trades": len(trades),
         "win_rate_pct": round(100 * len(wins) / len(trades), 2) if trades else None,
         "profit_factor": (round(gross_win / gross_loss, 3) if gross_loss > 0
@@ -109,6 +115,7 @@ def main():
     ap.add_argument("--timeframe", default="5m", choices=["1m", "5m", "15m", "1h", "4h"])
     ap.add_argument("--start", default="2024-01")
     ap.add_argument("--end", default="2026-09")
+    ap.add_argument("--execution", choices=["taker", "maker"], default="taker")
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
@@ -122,12 +129,12 @@ def main():
     else:
         bars = generate_synthetic_bars(n=20000)
         label = "sintético 20000 velas"
-    print(f"{label}: {len(bars):,} velas cargadas en {time.time() - t0:.1f}s")
+    print(f"[{args.execution}] {label}: {len(bars):,} velas cargadas en {time.time() - t0:.1f}s")
 
     results = {}
     for name, factory in STRATEGIES:
         t1 = time.time()
-        res = run_backtest(factory(), bars)
+        res = run_backtest(factory(), bars, execution_mode=args.execution)
         m = metrics(res)
         results[name] = m
         print(f"\n=== {name} ===  ({time.time() - t1:.1f}s)")
@@ -140,12 +147,13 @@ def main():
 
     out = args.out or os.path.join(
         "data", "reports",
-        f"backtest_{args.symbol.lower()}_{args.timeframe}_{args.start}_{args.end}.json")
+        f"backtest_{args.symbol.lower()}_{args.timeframe}_{args.start}_{args.end}_{args.execution}.json")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as fh:
         json.dump({"symbol": args.symbol, "timeframe": args.timeframe,
                    "start": args.start, "end": args.end, "bars": len(bars),
-                   "engine_notes": "run_backtest sin cambios; funding fijo 0.0001/8h",
+                   "execution": args.execution,
+                   "engine_notes": "funding fijo 0.0001/8h",
                    "results": results}, fh, indent=2, ensure_ascii=False)
     print(f"\nGuardado: {out}  (total {time.time() - t0:.1f}s)")
 

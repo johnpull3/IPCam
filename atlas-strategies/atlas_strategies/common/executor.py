@@ -5,12 +5,27 @@ from .risk import size_position
 
 TAKER_FEE = 0.0004
 SLIPPAGE = 0.0002
+MAKER_FEE = 0.0002
+
+EXECUTION_MODES = ("taker", "maker")
+
+
+def maker_fill_price(signal: Signal, signal_close: float, next_bar) -> Optional[float]:
+    """LIMIT al close de la vela de señal. Se llena solo si la vela siguiente toca el precio.
+
+    LONG: low <= limit. SHORT: high >= limit. Devuelve el precio límite o None si no llena.
+    """
+    limit = signal_close
+    if signal.side == Side.LONG:
+        return limit if next_bar.low <= limit else None
+    return limit if next_bar.high >= limit else None
 
 
 def build_position(signal: Signal, entry_open: float, equity: float,
-                   filters: SymbolFilters, entry_ts: int, entry_index: int) -> Optional[Position]:
+                   filters: SymbolFilters, entry_ts: int, entry_index: int,
+                   slippage: float = SLIPPAGE) -> Optional[Position]:
     if signal.side == Side.LONG:
-        fill = entry_open * (1 + SLIPPAGE)
+        fill = entry_open * (1 + slippage)
         if signal.sl_price is not None:
             sl = signal.sl_price
         elif signal.sl_pct is not None:
@@ -25,7 +40,7 @@ def build_position(signal: Signal, entry_open: float, equity: float,
         else:
             tp = fill * 1.10
     else:
-        fill = entry_open * (1 - SLIPPAGE)
+        fill = entry_open * (1 - slippage)
         if signal.sl_price is not None:
             sl = signal.sl_price
         elif signal.sl_pct is not None:
@@ -71,11 +86,11 @@ def check_exit(position: Position, bar) -> Optional[str]:
     return None
 
 
-def exit_pnl(position: Position, exit_price: float) -> float:
+def exit_pnl(position: Position, exit_price: float, fee_rate: float = TAKER_FEE) -> float:
     if position.side == Side.LONG:
         gross = (exit_price - position.entry_price) * position.qty
     else:
         gross = (position.entry_price - exit_price) * position.qty
 
-    fees = (position.entry_price + exit_price) * position.qty * TAKER_FEE
+    fees = (position.entry_price + exit_price) * position.qty * fee_rate
     return gross - fees
