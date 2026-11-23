@@ -8,21 +8,21 @@
     "start": "2020-01-01 00:00 UTC",
     "end_exclusive": "2026-11-01 00:00 UTC"
   },
-  "generated_at": "2026-11-23T16:04:34+00:00",
+  "generated_at": "2026-11-23T16:11:39+00:00",
   "totals": {
     "expected_bars": 3594240,
-    "present_bars": 3592800,
-    "missing_bars": 1440,
-    "coverage_pct": 99.9599,
+    "present_bars": 3594240,
+    "missing_bars": 0,
+    "coverage_pct": 100.0,
     "duplicate_timestamps": 0,
     "misaligned_timestamps": 0
   },
   "months": {
     "total": 82,
     "missing_files": [],
-    "coverage_gt_99": 81,
-    "coverage_gt_99_pct": 98.78,
-    "coverage_100": 81
+    "coverage_gt_99": 82,
+    "coverage_gt_99_pct": 100.0,
+    "coverage_100": 82
   },
   "gap_categories_by_missing_minutes": {
     "definition": "<5min: 1-4 | 5min-1h: 5-60 | 1h-1dia: 61-1440 | >1dia: >1440 minutos faltantes",
@@ -35,26 +35,16 @@
       "missing_minutes": 0
     },
     "1h-1dia": {
-      "count": 1,
-      "missing_minutes": 1440
+      "count": 0,
+      "missing_minutes": 0
     },
     ">1dia": {
       "count": 0,
       "missing_minutes": 0
     }
   },
-  "gap_count": 1,
-  "top_gaps": [
-    {
-      "last_bar_before": "2026-10-27 23:59 UTC",
-      "first_bar_after": "2026-10-29 00:00 UTC",
-      "missing_from": "2026-10-28 00:00 UTC",
-      "missing_to": "2026-10-28 23:59 UTC",
-      "missing_minutes": 1440,
-      "duration_h": 24.0,
-      "category": "1h-1dia"
-    }
-  ],
+  "gap_count": 0,
+  "top_gaps": [],
   "per_month": [
     {
       "month": "2020-01",
@@ -788,22 +778,12 @@
     {
       "month": "2026-10",
       "expected": 44640,
-      "present": 43200,
-      "rows_in_file": 43200,
+      "present": 44640,
+      "rows_in_file": 44640,
       "rows_outside_month": 0,
-      "coverage_pct": 96.7742,
+      "coverage_pct": 100.0,
       "file_missing": false
     }
   ],
-  "all_gaps": [
-    {
-      "last_bar_before": "2026-10-27 23:59 UTC",
-      "first_bar_after": "2026-10-29 00:00 UTC",
-      "missing_from": "2026-10-28 00:00 UTC",
-      "missing_to": "2026-10-28 23:59 UTC",
-      "missing_minutes": 1440,
-      "duration_h": 24.0,
-      "category": "1h-1dia"
-    }
-  ]
+  "all_gaps": []
 }
