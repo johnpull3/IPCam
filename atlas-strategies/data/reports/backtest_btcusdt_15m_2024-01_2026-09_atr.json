@@ -1,0 +1,151 @@
+{
+  "symbol": "BTCUSDT",
+  "timeframe": "15m",
+  "start": "2024-01",
+  "end": "2026-09",
+  "bars": 96384,
+  "engine_notes": "run_backtest sin cambios; funding fijo 0.0001/8h",
+  "results": {
+    "VWAP+EMA+RSI Scalp": {
+      "n_trades": 1203,
+      "win_rate_pct": 33.58,
+      "profit_factor": 0.767,
+      "return_pct": -53.07,
+      "final_equity": 4693.41,
+      "max_drawdown_pct": 54.08,
+      "sharpe_approx": -2.216,
+      "breakdown": {
+        "by_side": {
+          "LONG": {
+            "n": 671,
+            "wins": 224,
+            "pnl": -3117.74
+          },
+          "SHORT": {
+            "n": 532,
+            "wins": 180,
+            "pnl": -1944.49
+          }
+        },
+        "by_reason": {
+          "TP": {
+            "n": 404,
+            "wins": 404,
+            "pnl": 16689.93
+          },
+          "SL": {
+            "n": 799,
+            "wins": 0,
+            "pnl": -21752.16
+          }
+        },
+        "by_tag": {
+          "vwap_ema_rsi_long": {
+            "n": 671,
+            "wins": 224,
+            "pnl": -3117.74
+          },
+          "vwap_ema_rsi_short": {
+            "n": 532,
+            "wins": 180,
+            "pnl": -1944.49
+          }
+        }
+      }
+    },
+    "Bollinger+RSI2": {
+      "n_trades": 2446,
+      "win_rate_pct": 32.05,
+      "profit_factor": 0.735,
+      "return_pct": -76.07,
+      "final_equity": 2392.58,
+      "max_drawdown_pct": 77.17,
+      "sharpe_approx": -2.242,
+      "breakdown": {
+        "by_side": {
+          "SHORT": {
+            "n": 1275,
+            "wins": 413,
+            "pnl": -3789.35
+          },
+          "LONG": {
+            "n": 1171,
+            "wins": 371,
+            "pnl": -3909.06
+          }
+        },
+        "by_reason": {
+          "SL": {
+            "n": 1662,
+            "wins": 0,
+            "pnl": -29029.6
+          },
+          "TP": {
+            "n": 784,
+            "wins": 784,
+            "pnl": 21331.19
+          }
+        },
+        "by_tag": {
+          "bb_rsi2_short": {
+            "n": 1275,
+            "wins": 413,
+            "pnl": -3789.35
+          },
+          "bb_rsi2_long": {
+            "n": 1171,
+            "wins": 371,
+            "pnl": -3909.06
+          }
+        }
+      }
+    },
+    "Swing Reclaim": {
+      "n_trades": 57,
+      "win_rate_pct": 24.56,
+      "profit_factor": 0.878,
+      "return_pct": -4.54,
+      "final_equity": 9545.52,
+      "max_drawdown_pct": 10.47,
+      "sharpe_approx": -0.848,
+      "breakdown": {
+        "by_side": {
+          "LONG": {
+            "n": 36,
+            "wins": 8,
+            "pnl": -333.72
+          },
+          "SHORT": {
+            "n": 21,
+            "wins": 6,
+            "pnl": 56.38
+          }
+        },
+        "by_reason": {
+          "SL": {
+            "n": 43,
+            "wins": 0,
+            "pnl": -2279.22
+          },
+          "TP": {
+            "n": 14,
+            "wins": 14,
+            "pnl": 2001.88
+          }
+        },
+        "by_tag": {
+          "swing_reclaim_long": {
+            "n": 36,
+            "wins": 8,
+            "pnl": -333.72
+          },
+          "swing_reclaim_short": {
+            "n": 21,
+            "wins": 6,
+            "pnl": 56.38
+          }
+        }
+      }
+    }
+  }
+}

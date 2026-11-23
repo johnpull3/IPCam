@@ -1,0 +1,118 @@
+{
+  "symbol": "BTCUSDT",
+  "timeframe": "4h",
+  "start": "2024-01",
+  "end": "2026-09",
+  "bars": 6024,
+  "engine_notes": "run_backtest sin cambios; funding fijo 0.0001/8h",
+  "results": {
+    "VWAP+EMA+RSI Scalp": {
+      "n_trades": 0,
+      "win_rate_pct": null,
+      "profit_factor": null,
+      "return_pct": 0.0,
+      "final_equity": 10000.0,
+      "max_drawdown_pct": 0.0,
+      "sharpe_approx": null,
+      "breakdown": {
+        "by_side": {},
+        "by_reason": {},
+        "by_tag": {}
+      }
+    },
+    "Bollinger+RSI2": {
+      "n_trades": 173,
+      "win_rate_pct": 30.64,
+      "profit_factor": 0.838,
+      "return_pct": -5.24,
+      "final_equity": 9475.95,
+      "max_drawdown_pct": 7.82,
+      "sharpe_approx": -1.279,
+      "breakdown": {
+        "by_side": {
+          "SHORT": {
+            "n": 89,
+            "wins": 26,
+            "pnl": -405.42
+          },
+          "LONG": {
+            "n": 84,
+            "wins": 27,
+            "pnl": -156.86
+          }
+        },
+        "by_reason": {
+          "SL": {
+            "n": 120,
+            "wins": 0,
+            "pnl": -3467.17
+          },
+          "TP": {
+            "n": 53,
+            "wins": 53,
+            "pnl": 2904.89
+          }
+        },
+        "by_tag": {
+          "bb_rsi2_short": {
+            "n": 89,
+            "wins": 26,
+            "pnl": -405.42
+          },
+          "bb_rsi2_long": {
+            "n": 84,
+            "wins": 27,
+            "pnl": -156.86
+          }
+        }
+      }
+    },
+    "Swing Reclaim": {
+      "n_trades": 22,
+      "win_rate_pct": 27.27,
+      "profit_factor": 1.064,
+      "return_pct": 0.37,
+      "final_equity": 10037.04,
+      "max_drawdown_pct": 4.23,
+      "sharpe_approx": 0.493,
+      "breakdown": {
+        "by_side": {
+          "SHORT": {
+            "n": 11,
+            "wins": 3,
+            "pnl": 28.21
+          },
+          "LONG": {
+            "n": 11,
+            "wins": 3,
+            "pnl": 24.65
+          }
+        },
+        "by_reason": {
+          "TP": {
+            "n": 6,
+            "wins": 6,
+            "pnl": 878.41
+          },
+          "SL": {
+            "n": 16,
+            "wins": 0,
+            "pnl": -825.55
+          }
+        },
+        "by_tag": {
+          "swing_reclaim_short": {
+            "n": 11,
+            "wins": 3,
+            "pnl": 28.21
+          },
+          "swing_reclaim_long": {
+            "n": 11,
+            "wins": 3,
+            "pnl": 24.65
+          }
+        }
+      }
+    }
+  }
+}
