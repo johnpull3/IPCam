@@ -54,6 +54,33 @@ def max_drawdown(curve, initial):
     return mdd * 100
 
 
+def sharpe_per_trade(trades, initial):
+    """mean/std de los retornos por trade cerrado × sqrt(252) (aproximación pedida).
+
+    retorno_i = pnl_i / equity antes del trade (equity = inicial + PnL acumulado; ignora funding).
+    """
+    if len(trades) < 2:
+        return None
+    eq, rets = initial, []
+    for t in trades:
+        rets.append(t.pnl / eq if eq > 0 else 0.0)
+        eq += t.pnl
+    mean = sum(rets) / len(rets)
+    var = sum((r - mean) ** 2 for r in rets) / (len(rets) - 1)
+    return round(mean / var ** 0.5 * 252 ** 0.5, 3) if var > 0 else None
+
+
+def breakdown(trades):
+    out = {"by_side": {}, "by_reason": {}, "by_tag": {}}
+    for t in trades:
+        for key, val in (("by_side", t.side.value), ("by_reason", t.reason), ("by_tag", t.tag)):
+            d = out[key].setdefault(val, {"n": 0, "wins": 0, "pnl": 0.0})
+            d["n"] += 1
+            d["wins"] += t.pnl > 0
+            d["pnl"] = round(d["pnl"] + t.pnl, 2)
+    return out
+
+
 def metrics(result):
     trades = result["trades"]
     wins = [t for t in trades if t.pnl > 0]
@@ -69,6 +96,8 @@ def metrics(result):
         "final_equity": round(result["final_equity"], 2),
         "max_drawdown_pct": round(max_drawdown(result["equity_curve"],
                                                result["initial_equity"]), 2),
+        "sharpe_approx": sharpe_per_trade(trades, result["initial_equity"]),
+        "breakdown": breakdown(trades),
     }
 
 
@@ -103,7 +132,11 @@ def main():
         results[name] = m
         print(f"\n=== {name} ===  ({time.time() - t1:.1f}s)")
         for k, v in m.items():
-            print(f"  {k:<17} {v}")
+            if k != "breakdown":
+                print(f"  {k:<17} {v}")
+        for k, groups in m["breakdown"].items():
+            print(f"  {k}: " + ", ".join(f"{g}={d['n']} (wins {d['wins']}, pnl {d['pnl']})"
+                                          for g, d in groups.items()))
 
     out = args.out or os.path.join(
         "data", "reports",
