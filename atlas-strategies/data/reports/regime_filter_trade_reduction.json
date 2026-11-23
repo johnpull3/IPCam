@@ -1,0 +1,30 @@
+{
+ "trades_sin_filtro_total": 5748,
+ "trades_con_filtro": 3527,
+ "reduccion_total_pct": 38.6,
+ "trades_sin_filtro_en_ventana_filtro_activo": 4993,
+ "reduccion_en_ventana_pct": 29.4,
+ "pf_sin_filtro_en_ventana": 1.137,
+ "filtro_listo_desde": {
+  "BTCUSDT": "2020-07-18",
+  "ETHUSDT": "2020-07-18",
+  "SOLUSDT": "2021-04-01",
+  "XRPUSDT": "2020-07-23",
+  "AVAXUSDT": "2021-04-10",
+  "DOGEUSDT": "2021-01-25",
+  "BNBUSDT": "2020-08-27",
+  "ADAUSDT": "2020-08-17",
+  "LTCUSDT": "2020-07-26",
+  "LINKUSDT": "2020-08-03",
+  "DOTUSDT": "2021-03-09",
+  "ATOMUSDT": "2020-08-24",
+  "SUSHIUSDT": "2021-03-22",
+  "BCHUSDT": "2020-07-18",
+  "ETCUSDT": "2020-08-02",
+  "CRVUSDT": "2021-03-19",
+  "YFIUSDT": "2021-03-18",
+  "EGLDUSDT": "2021-04-01",
+  "UNIUSDT": "2021-04-05",
+  "ALGOUSDT": "2021-01-01"
+ }
+}

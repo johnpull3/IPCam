@@ -28,6 +28,7 @@ from atlas_strategies.strategies.vwap_ema_rsi_scalp import VwapEmaRsiScalp  # no
 
 STRATEGIES = {
     "TrendPullback": TrendPullbackStrategy,
+    "TrendPullbackRegime": lambda: TrendPullbackStrategy(regime_filter=True),
     "DonchianBreakout": DonchianBreakoutStrategy,
     "SwingReclaim": SwingReclaim,
     "VwapEmaRsi": VwapEmaRsiScalp,
