@@ -28,6 +28,7 @@ class Signal:
     sl_price: Optional[float] = None
     tp_price: Optional[float] = None
     tag: str = ""
+    use_tp: bool = True  # False: sin TP fijo (salida por trailing stop o señal)
 
 
 @dataclass
@@ -36,7 +37,7 @@ class Position:
     entry_price: float
     qty: float
     sl_price: float
-    tp_price: float
+    tp_price: Optional[float]
     tag: str = ""
     entry_ts: int = 0
     entry_index: int = 0
@@ -62,3 +63,14 @@ class Trade:
     entry_ts: int
     exit_ts: int
     bars_held: int
+
+
+@dataclass
+class PositionUpdate:
+    """Respuesta de una estrategia que gestiona su posición abierta.
+
+    new_stop: nuevo stop propuesto (el engine solo lo acepta si no afloja el actual).
+    exit: True para cerrar al open de la vela siguiente (motivo "SIGNAL").
+    """
+    new_stop: Optional[float] = None
+    exit: bool = False

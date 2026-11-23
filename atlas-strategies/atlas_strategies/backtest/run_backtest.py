@@ -1,6 +1,7 @@
 from atlas_strategies.common.models import SymbolFilters, Trade, Side
 from atlas_strategies.common.executor import (
-    EXECUTION_MODES, MAKER_FEE, TAKER_FEE, build_position, check_exit, exit_pnl, maker_fill_price
+    EXECUTION_MODES, MAKER_FEE, TAKER_FEE, build_position, check_exit, exit_pnl,
+    maker_fill_price, ratchet_stop,
 )
 from atlas_strategies.backtest.data_generator import generate_synthetic_bars
 
@@ -15,6 +16,9 @@ def run_backtest(strategy, bars, filters=None, initial_equity=10000.0,
     fee_rate = MAKER_FEE if execution_mode == "maker" else TAKER_FEE
     signals = 0
     missed_signals = 0
+    # Estrategias con manages_position=True reciben on_bar(bar, position) mientras hay
+    # posición y pueden mover el stop (solo a favor) o pedir salida al open siguiente.
+    manages = getattr(strategy, "manages_position", False)
     equity = initial_equity
     position = None
     trades = []
@@ -26,6 +30,7 @@ def run_backtest(strategy, bars, filters=None, initial_equity=10000.0,
         bar = bars[i]
         next_bar = bars[i + 1]
 
+        exit_now = False
         if position is None:
             signal = strategy.on_bar(bar)
             if signal is not None:
@@ -46,6 +51,12 @@ def run_backtest(strategy, bars, filters=None, initial_equity=10000.0,
                     )
                 if position:
                     bars_held = 0
+        elif manages:
+            update = strategy.on_bar(bar, position)
+            if update is not None:
+                if update.new_stop is not None:
+                    ratchet_stop(position, update.new_stop)
+                exit_now = bool(update.exit)
 
         if position is not None:
             bars_held += 1
@@ -58,9 +69,14 @@ def run_backtest(strategy, bars, filters=None, initial_equity=10000.0,
                     equity += position.qty * next_bar.close * funding_rate_per_8h
                 next_funding_ts += 8 * 3600 * 1000
 
-            reason = check_exit(position, next_bar)
+            if exit_now:
+                reason, exit_price = "SIGNAL", next_bar.open
+            else:
+                reason = check_exit(position, next_bar)
+                exit_price = None
+                if reason is not None:
+                    exit_price = position.sl_price if reason == "SL" else position.tp_price
             if reason is not None:
-                exit_price = position.sl_price if reason == "SL" else position.tp_price
                 pnl = exit_pnl(position, exit_price, fee_rate)
                 equity += pnl
                 trades.append(Trade(

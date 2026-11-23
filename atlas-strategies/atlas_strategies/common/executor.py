@@ -33,7 +33,9 @@ def build_position(signal: Signal, entry_open: float, equity: float,
         else:
             return None
 
-        if signal.tp_price is not None:
+        if not signal.use_tp:
+            tp = None
+        elif signal.tp_price is not None:
             tp = signal.tp_price
         elif signal.rr is not None:
             tp = fill + signal.rr * (fill - sl)
@@ -48,7 +50,9 @@ def build_position(signal: Signal, entry_open: float, equity: float,
         else:
             return None
 
-        if signal.tp_price is not None:
+        if not signal.use_tp:
+            tp = None
+        elif signal.tp_price is not None:
             tp = signal.tp_price
         elif signal.rr is not None:
             tp = fill - signal.rr * (sl - fill)
@@ -72,18 +76,28 @@ def build_position(signal: Signal, entry_open: float, equity: float,
 
 
 def check_exit(position: Position, bar) -> Optional[str]:
+    has_tp = position.tp_price is not None
     if position.side == Side.LONG:
         hit_sl = bar.low <= position.sl_price
-        hit_tp = bar.high >= position.tp_price
+        hit_tp = has_tp and bar.high >= position.tp_price
     else:
         hit_sl = bar.high >= position.sl_price
-        hit_tp = bar.low <= position.tp_price
+        hit_tp = has_tp and bar.low <= position.tp_price
 
     if hit_sl:
         return "SL"
     if hit_tp:
         return "TP"
     return None
+
+
+def ratchet_stop(position: Position, new_stop: float) -> float:
+    """Aplica un stop nuevo solo si es más ajustado (LONG: más alto, SHORT: más bajo)."""
+    if position.side == Side.LONG:
+        position.sl_price = max(position.sl_price, new_stop)
+    else:
+        position.sl_price = min(position.sl_price, new_stop)
+    return position.sl_price
 
 
 def exit_pnl(position: Position, exit_price: float, fee_rate: float = TAKER_FEE) -> float:

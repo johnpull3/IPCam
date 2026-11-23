@@ -1,0 +1,138 @@
+{
+  "strategy": "DonchianBreakout",
+  "timeframe": "1h",
+  "start": "2024-01",
+  "end": "2026-09",
+  "execution": "taker",
+  "per_symbol": {
+    "BTCUSDT": {
+      "n_trades": 757,
+      "win_rate_pct": 40.29,
+      "profit_factor": 0.927,
+      "avg_win": 41.84,
+      "avg_loss": -30.47,
+      "avg_rr": 1.37,
+      "net_pnl": -1009.51,
+      "return_pct": -10.95,
+      "final_equity": 8904.61,
+      "max_drawdown_pct": 18.83,
+      "bars": 24096,
+      "by_reason": {
+        "SIGNAL": 342,
+        "SL": 415
+      },
+      "long": 387,
+      "short": 370
+    },
+    "ETHUSDT": {
+      "n_trades": 707,
+      "win_rate_pct": 42.01,
+      "profit_factor": 1.1,
+      "avg_win": 51.28,
+      "avg_loss": -33.76,
+      "avg_rr": 1.52,
+      "net_pnl": 1385.88,
+      "return_pct": 13.09,
+      "final_equity": 11308.52,
+      "max_drawdown_pct": 8.35,
+      "bars": 24096,
+      "by_reason": {
+        "SIGNAL": 318,
+        "SL": 389
+      },
+      "long": 368,
+      "short": 339
+    },
+    "SOLUSDT": {
+      "n_trades": 774,
+      "win_rate_pct": 44.06,
+      "profit_factor": 0.995,
+      "avg_win": 38.77,
+      "avg_loss": -30.67,
+      "avg_rr": 1.26,
+      "net_pnl": -60.81,
+      "return_pct": -0.51,
+      "final_equity": 9948.5,
+      "max_drawdown_pct": 13.22,
+      "bars": 24096,
+      "by_reason": {
+        "SIGNAL": 349,
+        "SL": 425
+      },
+      "long": 383,
+      "short": 391
+    },
+    "BNBUSDT": {
+      "n_trades": 764,
+      "win_rate_pct": 41.36,
+      "profit_factor": 0.974,
+      "avg_win": 42.66,
+      "avg_loss": -30.89,
+      "avg_rr": 1.38,
+      "net_pnl": -357.69,
+      "return_pct": -4.63,
+      "final_equity": 9536.82,
+      "max_drawdown_pct": 15.5,
+      "bars": 24096,
+      "by_reason": {
+        "SIGNAL": 345,
+        "SL": 419
+      },
+      "long": 415,
+      "short": 349
+    },
+    "DOGEUSDT": {
+      "n_trades": 733,
+      "win_rate_pct": 44.34,
+      "profit_factor": 1.077,
+      "avg_win": 47.95,
+      "avg_loss": -35.45,
+      "avg_rr": 1.35,
+      "net_pnl": 1119.49,
+      "return_pct": 11.45,
+      "final_equity": 11145.18,
+      "max_drawdown_pct": 15.35,
+      "bars": 24096,
+      "by_reason": {
+        "SIGNAL": 327,
+        "SL": 406
+      },
+      "long": 366,
+      "short": 367
+    },
+    "XRPUSDT": {
+      "n_trades": 714,
+      "win_rate_pct": 43.42,
+      "profit_factor": 1.056,
+      "avg_win": 46.21,
+      "avg_loss": -33.57,
+      "avg_rr": 1.38,
+      "net_pnl": 763.43,
+      "return_pct": 7.76,
+      "final_equity": 10775.88,
+      "max_drawdown_pct": 11.61,
+      "bars": 24096,
+      "by_reason": {
+        "SIGNAL": 299,
+        "SL": 415
+      },
+      "long": 352,
+      "short": 362
+    }
+  },
+  "total": {
+    "n_trades": 4449,
+    "win_rate_pct": 42.57,
+    "profit_factor": 1.022,
+    "avg_win": 44.67,
+    "avg_loss": -32.39,
+    "avg_rr": 1.38,
+    "net_pnl": 1840.79,
+    "bootstrap_pf": {
+      "n": 1000,
+      "ci95_low": 0.938,
+      "ci95_high": 1.11,
+      "p_pf_lt_1_pct": 34.1
+    }
+  }
+}
