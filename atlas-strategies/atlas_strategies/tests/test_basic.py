@@ -49,29 +49,29 @@ def test_sl_first_when_both_hit():
 
 
 @pytest.mark.parametrize("factory", [VwapEmaRsiScalp, BollingerRsi2Reversion, SwingReclaim])
-def test_no_lookahead(factory):
-    """La señal en bar N no debe depender de bar N+1."""
-    bars = generate_synthetic_bars(n=2000)
-    s1 = factory()
-    s2 = factory()
-    signals_full = [s1.on_bar(b) for b in bars]
-    signals_trunc = [s2.on_bar(b) for b in bars[:-1]]
-    assert len(signals_trunc) == len(signals_full) - 1
+def test_no_lookahead_strict(factory):
+    """
+    La señal en la barra i NO debe depender de barras futuras.
+    Compara la ejecución completa vs ejecución con la última barra eliminada.
+    """
+    bars = generate_synthetic_bars(n=3000)
+    s_full = factory()
+    s_trunc = factory()
+
+    signals_full = [s_full.on_bar(b) for b in bars]
+    signals_trunc = [s_trunc.on_bar(b) for b in bars[:-1]]
+
     for i in range(len(signals_trunc)):
         a = signals_full[i]
         b = signals_trunc[i]
-        if a is None and b is None:
-            continue
-        assert (a is None) == (b is None), (
-            f"{factory.__name__}: señal distinta en índice {i}: "
-            f"full={a!r} trunc={b!r}"
-        )
-        assert a.side == b.side, (
-            f"{factory.__name__}: side distinto en índice {i}: {a.side} vs {b.side}"
-        )
-        assert a.tag == b.tag, (
-            f"{factory.__name__}: tag distinto en índice {i}: {a.tag} vs {b.tag}"
-        )
+        if (a is None) != (b is None):
+            raise AssertionError(
+                f"Lookahead detectado en barra {i}: "
+                f"full={a}, trunc={b}"
+            )
+        if a is not None and b is not None:
+            assert a.side == b.side, f"Side distinto en barra {i}"
+            assert a.tag == b.tag, f"Tag distinto en barra {i}"
 
 
 @pytest.mark.parametrize("factory", [VwapEmaRsiScalp, BollingerRsi2Reversion, SwingReclaim])
