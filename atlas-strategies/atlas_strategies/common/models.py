@@ -41,6 +41,7 @@ class Position:
     tag: str = ""
     entry_ts: int = 0
     entry_index: int = 0
+    funding: float = 0.0  # flujo neto de funding acumulado (+ cobrado, - pagado)
 
 
 @dataclass
@@ -63,6 +64,7 @@ class Trade:
     entry_ts: int
     exit_ts: int
     bars_held: int
+    funding: float = 0.0  # flujo neto de funding durante el trade (no incluido en pnl)
 
 
 @dataclass
